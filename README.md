@@ -21,3 +21,13 @@ $Line->getToken(['code' => $code]);
 $Line->getProfile();
 
 ```
+
+#### MessagingAPI
+
+```php
+
+$MsgAPI = new \namwansoft\Line\MessagingAPI($accessToken, $Proxy);
+
+
+
+```
