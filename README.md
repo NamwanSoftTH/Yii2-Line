@@ -1,9 +1,9 @@
-# Yii2-SmsGateway
+# Yii2-Line
 
 ## Installation
 
 ```
-composer require namwansoft/yii2-sms-gateway "@dev"
+composer require namwansoft/yii2-line "@dev"
 ```
 
 ## Usage
