@@ -14,11 +14,11 @@ class MessagingAPI extends \yii\base\Component
     private $URL_Token_Verify = 'https://api.line.me/oauth2/v2.1/verify';
     private $accessToken, $Proxy;
 
-    public function __construct($accessToken = null, object $Proxy)
+    public function __construct($accessToken = null, $Proxy = false)
     {
         parent::__construct();
         $this->accessToken = $accessToken;
-        $this->Proxy = $Proxy;
+        $this->Proxy = (object) $Proxy ?? false;
     }
 
     public function BotInfo()
