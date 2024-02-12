@@ -54,9 +54,9 @@ class MessagingAPI extends \yii\base\Component
         }
     }
 
-    public function SendReply($data, $Token)
+    public function SendReply($data)
     {
-        $Curl = $this->cUrl('POST', $this->URL_Api . '/message/reply', $data, $Token);
+        $Curl = $this->cUrl('POST', $this->URL_Api . '/message/reply', $data, $this->accessToken);
         $SQL = "INSERT INTO tb__log_oa VALUES (NULL,'" . Yii::$app->Company->id . "','reply','" . $data . "','" . json_encode($Curl) . "','" . time() . "')";
         try {
             if ($Curl['response_code'] !== 200) {
@@ -67,7 +67,7 @@ class MessagingAPI extends \yii\base\Component
         return $Curl;
     }
 
-    public function SendPush($data, $Token)
+    public function SendPush($data)
     {
         $tempData = json_decode($data, true);
         $userId = $tempData['to'];
@@ -75,9 +75,9 @@ class MessagingAPI extends \yii\base\Component
         if ($userId && $reply) {
             $newData = str_replace('"to":"' . $userId . '"', '"replyToken":"' . $reply . '"', $data);
             Yii::$app->cache->delete('replyToken_' . $userId);
-            return $this->SendReply($newData, $Token);
+            return $this->SendReply($newData, $this->accessToken);
         }
-        $Curl = $this->cUrl('POST', $this->URL_Api . '/message/push', $data, $Token);
+        $Curl = $this->cUrl('POST', $this->URL_Api . '/message/push', $data, $this->accessToken);
         $SQL = "INSERT INTO tb__log_oa VALUES (NULL,'" . Yii::$app->Company->id . "','push','" . $data . "','" . json_encode($Curl) . "','" . time() . "')";
         try {
             if ($Curl['response_code'] !== 200) {
