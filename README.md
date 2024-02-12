@@ -24,7 +24,7 @@ $arSms = (object) [
 
 ```php
 
-$Login = new \namwansoft\Line\Login($$clientId, $clientSecret);
+$Login = new \namwansoft\Line\Login($clientId, $clientSecret);
 
 $Line->getLoginUrl();
 
