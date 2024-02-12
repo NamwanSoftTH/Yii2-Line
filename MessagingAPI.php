@@ -12,13 +12,13 @@ class MessagingAPI extends \yii\base\Component
     private $URL_Liff = 'https://api.line.me/liff/v1/apps/';
     private $URL_Token = 'https://api.line.me/v2/oauth/accessToken';
     private $URL_Token_Verify = 'https://api.line.me/oauth2/v2.1/verify';
-    private $accessToken;
-    private $Proxy = false;
+    private $accessToken, $Proxy;
 
-    public function __construct($accessToken = null)
+    public function __construct($accessToken = null, object $Proxy)
     {
         parent::__construct();
         $this->accessToken = $accessToken;
+        $this->Proxy = $Proxy;
     }
 
     public function BotInfo()
@@ -207,15 +207,6 @@ class MessagingAPI extends \yii\base\Component
         return true;
     }
     /** Not Edit */
-
-    /**
-     * $host = ip:port
-     * $auth = user:pass
-     */
-    public function setProxy($host = false, $auth = false)
-    {
-        $this->Proxy = (!$host || !$auth) ? false : (object) ['host' => $host, 'auth' => $auth];
-    }
 
     private function cUrl($method, $url, $data = '', $Token = '', $File = false)
     {
