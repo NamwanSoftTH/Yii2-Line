@@ -8,19 +8,7 @@ composer require namwansoft/yii2-sms-gateway "@dev"
 
 ## Usage
 
-```php
-
-$arSms = (object) [
-    'sender_name'   => '',
-    'key_api'       => '',
-    'key_secret'    => '',
-    'OtpKey'        => '',
-    'OtpSecret'     => '',
-];
-
-```
-
-### Login
+#### Login
 
 ```php
 
