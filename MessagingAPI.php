@@ -252,7 +252,7 @@ class MessagingAPI extends \yii\base\Component
         $response = substr($response, $header_size);
         curl_close($ch);
         if (in_array($data, ['getContent', 'getImg'], true)) {
-            return ['response_code' => $response_code, 'response' => 'data:' . trim($header['content-type']) . ';base64,' . base64_encode($response)];
+            return ['response_code' => $response_code, 'response' => 'data:' . trim($header['content-type']) . ';base64,' . base64_encode($response), 'base64' => base64_encode($response)];
         }
         return ['response_code' => $response_code, 'response' => json_decode($response, true), 'response_header' => $header];
     }
