@@ -225,7 +225,7 @@ class MessagingAPI extends \yii\base\Component
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         if ($Token) {
             if ($data == 'getContent') {
-
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $arHead);
             } else if ($data == 'getImg') {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($arHead, $File));
             } else if (!$File) {
@@ -251,7 +251,9 @@ class MessagingAPI extends \yii\base\Component
         $header = $this->headersToArray($header);
         $response = substr($response, $header_size);
         curl_close($ch);
-        if ($data == 'getImg') {
+        if ($data == 'getContent') {
+            return ['response_code' => $response_code, 'response' => 'data:' . trim($header['content-type']) . ';base64,' . base64_encode($response)];
+        } else if ($data == 'getImg') {
             return ['response_code' => $response_code, 'response' => 'data:image/png;base64,' . base64_encode($response)];
         }
         return ['response_code' => $response_code, 'response' => json_decode($response, true), 'response_header' => $header];
