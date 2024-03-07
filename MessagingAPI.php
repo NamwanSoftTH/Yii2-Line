@@ -95,6 +95,10 @@ class MessagingAPI extends \yii\base\Component
     // {
     //     return $this->cUrl('GET', $this->URL_Api . '/message/delivery/push?date=' . $date, null, $this->accessToken);
     // }
+    public function getContent($msgId)
+    {
+        return $this->cUrl('GET', $this->URL_Data . '/message/' . $msgId . '/content', 'getContent', $this->accessToken);
+    }
 
     /** RichMenu */
     public function RichMenu($richMenuId = false)
@@ -220,7 +224,9 @@ class MessagingAPI extends \yii\base\Component
         curl_setopt($ch, CURLOPT_TIMEOUT, 15);
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         if ($Token) {
-            if ($data == 'getImg') {
+            if ($data == 'getContent') {
+
+            } else if ($data == 'getImg') {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($arHead, $File));
             } else if (!$File) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($arHead, ['Content-Type: application/json']));
