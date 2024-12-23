@@ -196,9 +196,27 @@ class MessagingAPI extends \yii\base\Component
         return $Curl['response']['access_token'];
     }
 
+    public function LiffGet($data, $Token)
+    {
+        $Curl = $this->cUrl('GET', $this->URL_Liff, null, $Token);
+        return $Curl;
+    }
+
+    public function LiffAdd($data, $Token)
+    {
+        $Curl = $this->cUrl('POST', $this->URL_Liff, $data, $Token);
+        return $Curl;
+    }
+
     public function LiffUpdate($liffId, $data, $Token)
     {
         $Curl = $this->cUrl('PUT', $this->URL_Liff . $liffId, $data, $Token);
+        return $Curl;
+    }
+
+    public function LiffDelete($liffId, $Token)
+    {
+        $Curl = $this->cUrl('DELETE', $this->URL_Liff . $liffId, null, $Token);
         return $Curl;
     }
 
