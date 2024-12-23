@@ -196,7 +196,7 @@ class MessagingAPI extends \yii\base\Component
         return $Curl['response']['access_token'];
     }
 
-    public function LiffGet($data, $Token)
+    public function LiffGet($Token)
     {
         $Curl = $this->cUrl('GET', $this->URL_Liff, null, $Token);
         return $Curl;
