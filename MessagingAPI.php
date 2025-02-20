@@ -54,6 +54,11 @@ class MessagingAPI extends \yii\base\Component
         }
     }
 
+    public function SendWaiting($chatId)
+    {
+        return $this->cUrl('POST', $this->URL_Api . '/chat/loading/start', ['chatId' => $chatId, 'loadingSeconds' => 60], $this->accessToken);
+    }
+
     public function SendReply($data)
     {
         $Curl = $this->cUrl('POST', $this->URL_Api . '/message/reply', $data, $this->accessToken);
