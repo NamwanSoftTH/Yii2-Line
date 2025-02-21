@@ -92,6 +92,18 @@ class MessagingAPI extends \yii\base\Component
         } catch (\yii\db\Exception $ex) {}
         return $Curl;
     }
+    public function SendMulticast($data)
+    {
+        $Curl = $this->cUrl('POST', $this->URL_Api . '/message/multicast', $data, $this->accessToken);
+        $SQL = "INSERT INTO tb__log_oa VALUES (NULL,'" . Yii::$app->Company->id . "','multicast','" . $data . "','" . json_encode($Curl) . "','" . time() . "')";
+        try {
+            if ($Curl['response_code'] !== 200) {
+                $DBConn = Yii::$app->getDb();
+                $DBConn->createCommand($SQL)->execute();
+            }
+        } catch (\yii\db\Exception $ex) {}
+        return $Curl;
+    }
     // public function BotMsgReply($date)
     // {
     //     return $this->cUrl('GET', $this->URL_Api . '/message/delivery/reply?date=' . $date, null, $this->accessToken);
