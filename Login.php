@@ -12,15 +12,17 @@ class Login extends \yii\base\Component
 
     private $URL_AUTH = 'https://access.line.me/oauth2/v2.1/authorize';
     private $URL_TOKEN = 'https://api.line.me/oauth2/v2.1/token';
+    private $URL_VERIFY = 'https://api.line.me/oauth2/v2.1/verify';
     private $URL_STATUS = 'https://api.line.me/friendship/v1/status';
     private $URL_PROFILE = 'https://api.line.me/v2/profile';
 
     private $payload;
 
-    public function __construct($clientId, $clientSecret = null)
+    public function __construct($clientId, $clientSecret = null, $token = null)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
+        $this->EncodeToken = $token;
     }
 
     /**
@@ -56,6 +58,18 @@ class Login extends \yii\base\Component
         $cUrl = $this->cUrl('POST', $this->URL_TOKEN, null, http_build_query($params, '', '&', PHP_QUERY_RFC3986), false);
         $this->Authorization = $cUrl->access_token ?? null;
         $this->EncodeToken = $cUrl->id_token ?? null;
+        return $cUrl;
+    }
+
+    public function getVerify($args = [])
+    {
+        $params = [
+            'client_id' => $this->clientId,
+            'id_token'  => $this->EncodeToken,
+        ];
+        $params = array_merge($params, $args);
+        $cUrl = $this->cUrl('POST', $this->URL_VERIFY, null, http_build_query($params, '', '&', PHP_QUERY_RFC3986), false);
+
         return $cUrl;
     }
 
