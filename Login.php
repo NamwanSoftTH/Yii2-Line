@@ -18,11 +18,10 @@ class Login extends \yii\base\Component
 
     private $payload;
 
-    public function __construct($clientId, $clientSecret = null, $token = null)
+    public function __construct($clientId, $clientSecret = null)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
-        $this->EncodeToken = $token;
     }
 
     /**
@@ -61,15 +60,10 @@ class Login extends \yii\base\Component
         return $cUrl;
     }
 
-    public function getVerify($args = [])
+    public function getVerify()
     {
-        $params = [
-            'client_id' => $this->clientId,
-            'id_token'  => $this->EncodeToken,
-        ];
-        $params = array_merge($params, $args);
+        $params = ['client_id' => $this->clientId, 'id_token' => $this->EncodeToken];
         $cUrl = $this->cUrl('POST', $this->URL_VERIFY, null, http_build_query($params, '', '&', PHP_QUERY_RFC3986), false);
-
         return $cUrl;
     }
 
